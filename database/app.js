@@ -2,8 +2,11 @@ const express = require('express');
 const app = express();
 const port = 8085;
 const knex = require('knex')(require('./knexfile.js')["development"]);
+const cors = require('cors');
 
 app.use(express.json());
+
+app.use(cors());
 
 app.listen(port, () => {
     console.log(`Your application is running on port ${port}`);
@@ -68,3 +71,5 @@ app.delete('/items/:id', (req, res) => {
             })
     })
 })
+
+//update method
