@@ -6,7 +6,7 @@ const knex = require('knex')(require('./knexfile.js')["development"])
 
 app.use(express.json());
 
-app.use(cors());
+app.use(cors())
 
 app.listen(port, () => {
     console.log(`Your application is running on port ${port}`);
@@ -80,6 +80,25 @@ app.post('/items', async(req, res) => {
         })
         .then(() => {
             knex('item_table')
+            .select('*')
+            .then(item => {
+                res.json(item);
+            })
+    });
+});
+
+app.post('/users', async(req, res) => {
+    const maxIdQuery = await knex('user_table').max('UserId as maxId').first();
+
+    await knex('user_table').insert({
+            UserId: maxIdQuery.maxId + 1,
+            First_Name: req.body.First_Name,
+            Last_Name: req.body.Last_Name,
+            Username: req.body.Username,
+            Password: req.body.Password
+        })
+        .then(() => {
+            knex('user_table')
             .select('*')
             .then(item => {
                 res.json(item);
