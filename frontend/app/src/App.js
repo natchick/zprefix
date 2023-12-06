@@ -1,14 +1,17 @@
 
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import Login from './Login.js';
+import LoginPage from './LoginPage.js';
+import { Home } from './Home.js';
+import { BrowserRouter as Router, Routes, Route, Switch, Link, useNavigate } from 'react-router-dom' ;
 
-
+export const userContext = React.createContext();
 
 const App = () => {
   const[items, setItems] = useState([]);
   const[users,setUsers] = useState([]);
   const[newItem, setNewItem] = useState({});
+  const[currentForm, setCurrentForm] = useState('login');
 
   useEffect(() => {
 
@@ -28,24 +31,44 @@ const App = () => {
 
 return(
   <main className = "App">
-    <Login></Login>
-    <div className="app">
-    <div className="Inventory">
-      <h1>Items</h1>
-      <ul>
-        {items.map((item) => (
-          <li key={item.id}>
-            <span>{item.UserId}</span>
-            <span>{item.Item_name}</span>
-            <span>{item.Description}</span>
-            <span>{item.Quantity}</span>
-          </li>
-    ))}
-      </ul>
+    <LoginPage></LoginPage>
+    <div className='links'>
+      <Link to='/' className='NavBar'>Home</Link>
+      <Link to='/Items' className='NavBar'>Items</Link>
+      <Link to='/MyItems' className='NavBar'>My Items</Link>
     </div>
-  </div>
+    <userContext.Provider>
+      <Routes>
+      <Route path='/' element={<Home />} />
+      {/* <Route path='/Items' element={<Items />} />
+      <Route path='/MyItems' element={<MyItems />} /> */}
+      </Routes>
+    </userContext.Provider>
+
   </main>
 )
 }
 
 export default App;
+
+
+
+
+
+
+
+// <div className="app">
+// <div className="Inventory">
+//   <h1>Items</h1>
+//   <ul>
+//     {items.map((item) => (
+//       <li key={item.id}>
+//         <span>User Id: {item.UserId} </span>
+//         <span>Item Name: {item.Item_name} </span>
+//         <span>Description: {item.Description} </span>
+//         <span>Quantity: {item.Quantity} </span>
+//       </li>
+// ))}
+//   </ul>
+// </div>
+// </div>

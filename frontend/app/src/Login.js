@@ -81,13 +81,7 @@ const Login = () => {
                 />
                 <button>Sign In</button>
             </form>
-            <p>
-                <span className="line">
-                    {/*put router link here*/}
-                    <a href="#">Sign Up</a>
-                </span>
-            </p>
-
+            <button className="Login" onClick={() => props.onFormSwitch('reigster')}>Click to Register for an account.</button>
         </section>
         )}
         </>

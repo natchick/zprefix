@@ -1,8 +1,8 @@
 const express = require('express');
 const app = express();
 const port = 8085;
-const knex = require('knex')(require('./knexfile.js')["development"]);
 const cors = require('cors');
+const knex = require('knex')(require('./knexfile.js')["development"])
 
 app.use(express.json());
 
@@ -12,8 +12,6 @@ app.listen(port, () => {
     console.log(`Your application is running on port ${port}`);
 });
 
-
-//first get to main page of database to show that the app.listen part works
 app.get('/', (req, res) => {
     res.send(`Your application is running`);
 });
@@ -27,6 +25,15 @@ app.get('/items', (req, res) => {
         });
 });
 
+//get users
+app.get('/users', (req, res) => {
+    knex('user_table')
+        .select('*')
+        .then(items => {
+            res.json(items);
+        })
+})
+
 //third get shows the item by its specific id 
 app.get('/items/:id', (req, res) => {
     var { id } = req.params;
@@ -38,16 +45,38 @@ app.get('/items/:id', (req, res) => {
         });
 });
 
-//post request to post a new item
+//get users by id
+app.get('/users/:id', (req, res) => {
+    var { id } = req.params;
+    knex.from('user_table')
+        .select('*')
+        .where('UserId', id)
+        .then(users => {
+            res.json(users);
+        })
+})
+
+// get all items that the user has posted
+app.get('/items/users/:id', function(req, res){
+    var { id } = req.params;
+    knex.from('item_table')
+        .join('user_table', 'user_table.UserId', 'item_table.UserId')
+        .where('user_table.UserId', id) 
+        .then(function(data){
+            res.send(data)
+        })
+})
+
+//post method
 app.post('/items', async(req, res) => {
     const maxIdQuery = await knex('item_table').max('id as maxId').first();
 
     await knex('item_table').insert({
             id: maxIdQuery.maxId + 1,
-            UserId: req.body.UserId,
             Item_Name: req.body.Item_Name,
             Description: req.body.Description,
-            Quantity: req.body.Quantity
+            Quantity: req.body.Quantity,
+            UserId: req.body.UserId
         })
         .then(() => {
             knex('item_table')
@@ -55,94 +84,5 @@ app.post('/items', async(req, res) => {
             .then(item => {
                 res.json(item);
             })
-        })
+    });
 });
-
-//delete method
-app.delete('/items/:id', (req, res) => {
-    knex('item_table')
-    .where('id', req.params.id)
-    .del()
-    .then(function(){
-        knex('item_table')
-            .select('*')
-            .then(items => {
-                res.json(items);
-            })
-    })
-})
-
-//update method
-app.patch('/items/:id', (req, res) => {
-    knex('item_table')
-        .where('id', req.params.id)
-        .update({
-            'Quanitity': req.params.Quanitity
-        })
-        .then(() => res.json(newItem));
-})
-
-
-//get users
-app.get('/users', (req, res) => {
-    knex('user_table')
-        .select('*')
-        .then(users => {
-            res.json(users);
-        });
-});
-
-//get users by id 
-app.get('/users/:id', (req, res) => {
-    var { id } = req.params;
-    knex('user_table')
-        .select('*')
-        .where('id', id)
-        .then(users => {
-            res.json(users);
-        });
-});
-
-//post request to post a new user
-app.post('/users', async(req, res) => {
-    const maxIdQuery = await knex('user_table').max('id as maxId').first();
-
-    await knex('user_table').insert({
-            id: maxIdQuery.maxId + 1,
-            First_Name: req.body.First_Name,
-            Last_Name: req.body.Last_Name,
-            Username: req.body.Username,
-            Password: req.body.Password
-        })
-        .then(() => {
-            knex('user_table')
-            .select('*')
-            .then(user=> {
-                res.json(user);
-            })
-        })
-});
-
-//delete method
-app.delete('/users/:id', (req, res) => {
-    knex('user_table')
-    .where('id', req.params.id)
-    .del()
-    .then(function(){
-        knex('user_table')
-            .select('*')
-            .then(users => {
-                res.json(users);
-            })
-    })
-})
-
-//update method
-app.patch('/users/:id', (req, res) => {
-    knex('user_table')
-        .where('id', req.params.id)
-        .update({
-            'Password': req.params.Password
-        })
-        .then(() => res.json(newPassword));
-})
