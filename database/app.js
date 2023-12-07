@@ -87,6 +87,7 @@ app.post('/items', async(req, res) => {
     });
 });
 
+//post to add a user to the database when creating an account
 app.post('/users', async(req, res) => {
     const maxIdQuery = await knex('user_table').max('UserId as maxId').first();
 
@@ -105,3 +106,25 @@ app.post('/users', async(req, res) => {
             })
     });
 });
+
+//post to check a user against the datbase when logging in
+app.get('/users/login', (req, res) => {
+    var { Username, Password} = req.params;
+    knex.from('user_table')
+        .select('*')
+        .where('Username', Username)
+        .then(user => {
+            res.json(user);
+        })
+})
+
+
+app.get('/users/:id', (req, res) => {
+    var { id } = req.params;
+    knex.from('user_table')
+        .select('*')
+        .where('UserId', id)
+        .then(users => {
+            res.json(users);
+        })
+})
