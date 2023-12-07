@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+#Getting Started
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to the inventory app.
 
-## Available Scripts
+To begin, cd into the database and run 
+$   npm install pg express knex cors
 
-In the project directory, you can run:
+then create a database named "inventory" inside of your postgres image or change the knexfile.js details to connect to your image and database
 
-### `npm start`
+then run:
+$   npx knex migrate:latest
+$   npx knex seed:run
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+this will set up your database tables and seeds in the inventory database
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+then make sure you are cd'd into database and run:
+$   node app.js
 
-### `npm test`
+this will start your backend server on port 8081
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+NEXT
 
-### `npm run build`
+cd into the frontend and run
+$cd app
+$   npm install pg express knex cors react react-router-dom
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+$ cd src
+$   npm install pg express knex cors react react-router-dom
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+$   npm start
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Now your app will run on port 3000
 
-### `npm run eject`
+The Home page shows a read only view of the items in the inventory
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+The Login Page allows you to log in : 
+example username: maddyc
+example password: woohoo
+this will get you a successful login and a link will appear to "My Inventory"
+Click the link and it will be editable and able to create your own item
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+If you don't have an account, go to Create an Account this will add you to the users directory so you can login
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
