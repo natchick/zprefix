@@ -1,4 +1,5 @@
 import React, {useState } from "react";
+import './App.css';
 
 export const Register = () => {
     const [FirstName, setFirstName] = useState('');
@@ -30,7 +31,7 @@ export const Register = () => {
 
 
     return(
-        <div className = "registerForm">
+        <div className = "App">
             <h2>Register for an Account</h2>
             <form className="register_form" onSubmit={handleSubmit}>
                 <label htmlFor="FirstName">First Name</label>

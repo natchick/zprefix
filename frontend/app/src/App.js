@@ -20,7 +20,7 @@ function App() {
           <Link to='/' className='NavBar'>Home </Link>
           <Link to='/Login' className='NavBar'>Login </Link>
           <Link to='/Register' className='NavBar'>Create Account </Link>
-          <Link to='/Items' className='NavBar'>Items </Link>
+          {/* <Link to='/Items' className='NavBar'>Items </Link> */}
         </div>
           <Routes>
           <Route path='/' element={<Home />} />

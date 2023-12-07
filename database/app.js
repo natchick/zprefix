@@ -86,7 +86,7 @@ app.put('/items/:id', function (req, res){
 })
 
 //post method to add a new item
-app.post('/items/:id', async(req, res) => {
+app.post('/items', async(req, res) => {
     const maxIdQuery = await knex('item_table').max('id as maxId').first();
 
     await knex('item_table').insert({
@@ -94,7 +94,7 @@ app.post('/items/:id', async(req, res) => {
             Item_Name: req.body.Item_Name,
             Description: req.body.Description,
             Quantity: req.body.Quantity,
-            UserId: req.body.UserId
+            // UserId: req.body.UserId
         })
         .then(() => {
             knex('item_table')
