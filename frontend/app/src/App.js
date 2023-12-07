@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Home } from './Home.js';
 import { Register } from './Register.js';
 import { BrowserRouter as Router, Routes, Route, Switch, Link, useNavigate } from 'react-router-dom' ;
-import MyItems from './MyItems.js';
+import { Items } from './MyItems.js';
 import Login from './Login.js';
 import useToken from './useToken.js';
 
@@ -21,13 +21,12 @@ function App() {
           <Link to='/Login' className='NavBar'>Login </Link>
           <Link to='/Register' className='NavBar'>Create Account </Link>
           <Link to='/Items' className='NavBar'>Items </Link>
-          <Link to='/MyItems' className='NavBar'>My Items </Link>
         </div>
           <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/Register' element={<Register />} />
           <Route path='/Login' element={<Login />} />
-          <Route path='/MyItems' element={<MyItems />} />
+          <Route path='/Items' element={<Items />} />
           {/* <Route path='/Items' element={<Items />} />
            <Route path='/MyItems' element={<MyItems />} /> */}
           </Routes>

@@ -1,54 +1,74 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types' ;
-import './Login.css'
+// import React, { useState } from 'react';
+// import PropTypes from 'prop-types' ;
+// import './Login.css'
+// import { Register } from './Register';
 
-async function loginFunction(credentials) {
-    return fetch('http://localhost:8085/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(credentials)
-    }) 
-        .then(data => data.json())
-}
+// // const bcrypt = require('bcrypt');
+// // const saltRounds = 10;
+// // const password = Register.password;
 
-export default function Login( { setToken }) {
+// // const saltedPassword = bcrypt.genSalt(saltRounds, function(err, salt) {
+// //     bcrypt.hash(password, salt, function(err, hash) {
+// //         fetch('htt[://localhost:8085/users', {
+// //             method: 'PUT',
+// //             body: JSON.stringify({
+// //                 Password: saltedPassword
+// //             })
+// //         })
+// //     })
+// // })
 
-    const [username, setUsername] = useState();
-    const [password, setPassword] = useState();
+// async function loginFunction(credentials) {
+//     fetch('http://localhost:8085/users', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(credentials)
+//      .then(data => data.json())
+//     })
+// }
 
-    const handleSubmit = async e => {
-        e.preventDefault();
-        const token = await loginFunction({
-            username,
-            password
-        });
-        setToken(token);
-    }
-    return(
-        <div className="login-wrapper">
-            <h1>Log In</h1>
-        <form onSubmit={handleSubmit}>
-            <label>
-                <p>Username</p>
-                <input type="text" onChange={e => setUsername(e.target.value)} />
-            </label>
-            <label>
-                <p>Password</p>
-                <input type="password" onChange={e => setPassword(e.target.value)} />
-            </label>
-            <div>
-                <button type='submit'>Login</button>
-            </div>
-        </form>
-        </div>
-    )
-}
+// export default function Login() {
 
-Login.propTypes = {
-    setToken: PropTypes.func.isRequired
-}
+//     const [username, setUsername] = useState();
+//     const [password, setPassword] = useState();
+
+//     const handleSubmit = async e => {
+//         e.preventDefault();
+//         bcrypt.compare(password, saltedPassword, function(err, result) {
+//             if (result) {
+//                 result.send('It Matches')
+//             } else {
+//                 console.log("Invalid password")
+//             }
+//         })
+//         };
+        
+    
+//     return(
+//         <div className="login-wrapper">
+//             <h1>Log In</h1>
+//         <form onSubmit={handleSubmit}>
+//             <label>
+//                 <p>Username</p>
+//                 <input type="text" onChange={e => setUsername(e.target.value)} />
+//             </label>
+//             <label>
+//                 <p>Password</p>
+//                 <input type="password" onChange={e => setPassword(e.target.value)} />
+//             </label>
+//             <div>
+//                 <button type='submit'>Login</button>
+//             </div>
+//         </form>
+//         </div>
+//     )
+// }
+
+// Login.propTypes = {
+//     setToken: PropTypes.func.isRequired
+// }
 
 
 

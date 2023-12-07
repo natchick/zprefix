@@ -45,6 +45,7 @@ app.get('/items/:id', (req, res) => {
         });
 });
 
+
 //get users by id
 app.get('/users/:id', (req, res) => {
     var { id } = req.params;
@@ -57,7 +58,7 @@ app.get('/users/:id', (req, res) => {
 })
 
 // get all items that the user has posted
-app.get('/items/users/:id', function(req, res){
+app.get('/items/user/:id', function(req, res){
     var { id } = req.params;
     knex.from('item_table')
         .join('user_table', 'user_table.UserId', 'item_table.UserId')
@@ -67,8 +68,25 @@ app.get('/items/users/:id', function(req, res){
         })
 })
 
-//post method
-app.post('/items', async(req, res) => {
+//edit item information 
+app.put('/items/:id', function (req, res){
+    knex('item_table').where('id', req.params.id)
+        .update({
+            Item_Name: req.body.Item_Name,
+            Description: req.body.Description,
+            Quantity: req.body.Quantity,
+        })
+        .then(() => {
+            knex('item_table')
+            .select('*')
+            .then(item => {
+                res.json(item);
+            })
+        })
+})
+
+//post method to add a new item
+app.post('/items/:id', async(req, res) => {
     const maxIdQuery = await knex('item_table').max('id as maxId').first();
 
     await knex('item_table').insert({
@@ -87,6 +105,18 @@ app.post('/items', async(req, res) => {
     });
 });
 
+//delete an item
+app.delete('/items/:id', async(req, res) => {
+    knex('item_table').where('id', req.params.id)
+        .del()
+        .then(function(){
+            knex('item_table')
+                .select('*')
+                .then(item => {
+                    res.json(item);
+                })
+        })
+})
 //post to add a user to the database when creating an account
 app.post('/users', async(req, res) => {
     const maxIdQuery = await knex('user_table').max('UserId as maxId').first();
@@ -118,7 +148,7 @@ app.get('/users/login', (req, res) => {
         })
 })
 
-
+//get a specific users info
 app.get('/users/:id', (req, res) => {
     var { id } = req.params;
     knex.from('user_table')
@@ -126,5 +156,14 @@ app.get('/users/:id', (req, res) => {
         .where('UserId', id)
         .then(users => {
             res.json(users);
+        })
+})
+
+//get a login page
+app.use('login', (req, res) => {
+    knex('user_table')
+        .select('*')
+        .then(items => {
+            res.json(items);
         })
 })
